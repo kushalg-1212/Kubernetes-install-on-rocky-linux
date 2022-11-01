@@ -11,12 +11,8 @@ sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
 # Updating Firewall Rules
 echo updating firewall rules to allow port 6443 , 2379-2380 ,10250,10251,10252 
 sleep 1s
-firewall-cmd --permanent --add-port=6443/tcp
-firewall-cmd --permanent --add-port=2379-2380/tcp
-firewall-cmd --permanent --add-port=10250/tcp
-firewall-cmd --permanent --add-port=10251/tcp
-firewall-cmd --permanent --add-port=10252/tcp
-firewall-cmd --reload
+systemctl stop firewalld
+systemctl disable firewalld
 modprobe br_netfilter
 sh -c "echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables"
 sh -c "echo '1' > /proc/sys/net/ipv4/ip_forward"
