@@ -73,9 +73,13 @@ echo starting kubernetes Control Node with created config files
 kubeadm init --config /home/kube/kubeadm-config.yaml
 echo waiting for 10 seconds before configuring Kubernetes config Files
 sleep 10s
-export KUBECONFIG=/etc/kubernetes/admin.conf
+mkdir -p $HOME/.kube
+cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+chown $(id -u):$(id -g) $HOME/.kube/config
 echo Successfull
 echo waiting 10 seconds before installing Network Policy 
-kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.24.3/manifests/calico.yaml
+kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.24.3/manifests/tigera-operator.yaml
+curl https://raw.githubusercontent.com/projectcalico/calico/v3.24.3/manifests/custom-resources.yaml -O
+kubectl create -f custom-resources.yaml
 sleep 5s
 echo done
