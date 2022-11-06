@@ -77,9 +77,3 @@ mkdir -p $HOME/.kube
 cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 chown $(id -u):$(id -g) $HOME/.kube/config
 echo Successfull
-echo waiting 10 seconds before installing Network Policy 
-kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.24.3/manifests/tigera-operator.yaml
-curl https://raw.githubusercontent.com/projectcalico/calico/v3.24.3/manifests/custom-resources.yaml -O
-kubectl create -f custom-resources.yaml
-sleep 5s
-echo done
